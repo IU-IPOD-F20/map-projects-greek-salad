@@ -5,7 +5,7 @@
 
 ## Team
 1. Amir Subaev - Programmer
-2. Salavat Dinmukhametov - Programmer
+2. [Salavat Dinmukhametov](https://github.com/slvt1) - Programmer
 3. [Valeriya Vertash](https://github.com/vvertash) - Scrum-master & Product owner
 
 ## Management stack
@@ -16,4 +16,5 @@
 
 ## Technology stack
 * [Github](https://github.com/)
-* 
+* React + Redux
+* Flask
