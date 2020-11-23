@@ -18,3 +18,29 @@
 * [Github](https://github.com/)
 * React + Redux
 * Python + Flask
+
+## Sprints
+### Sprint 0
+* Filling Readme
+* Youtrack configuration
+* Choose management stack
+* Choose technology stack
+
+### Sprint 1
+* CI/CD
+* User Stories
+* Fill backlog
+* MVP
+* Design
+* Report 1
+
+### Sprint 2
+* Database connection
+* Report 2
+
+### Sprint 3
+* Add content
+* Polishing
+* Report 3
+* Final Report
+
