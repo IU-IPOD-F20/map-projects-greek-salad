@@ -31,6 +31,7 @@
 * User Stories
 * Fill backlog
 * MVP
+* Correct Readme
 * Design
 * Report 1
 
