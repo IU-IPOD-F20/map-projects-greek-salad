@@ -2,3 +2,5 @@ wheel
 uvicorn
 fastapi
 pydantic
+pickleDB
+sqlalchemy

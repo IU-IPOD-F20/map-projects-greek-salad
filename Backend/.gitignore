@@ -3,6 +3,9 @@
 # dotenv
 .env
 
+# pickledb
+*.db
+
 # virtualenv
 .venv
 venv/
