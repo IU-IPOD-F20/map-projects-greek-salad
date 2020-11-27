@@ -1,0 +1,4 @@
+wheel
+uvicorn
+fastapi
+pydantic

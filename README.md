@@ -17,7 +17,7 @@
 ## Technology stack
 * [Github](https://github.com/)
 * React + Redux
-* Python + Flask
+* Python + FastAPI
 
 ## Sprints
 ### Sprint 0
