@@ -46,3 +46,9 @@ class Database:
             if not is_ok:
                 self.db.lpop(DBNames.QUIZZES_ID, self.db.lgetall(DBNames.QUIZZES_ID).index())
         return is_ok, "Error in database"
+
+    def get_quiz(self, quiz_id: int):
+        if quiz_id not in self.db.lgetall(DBNames.QUIZZES_ID):
+            return False, "No such quiz id", None
+        quiz = self.db.dget(DBNames.QUIZ_QUESTION, quiz_id)
+        return True, "", quiz
