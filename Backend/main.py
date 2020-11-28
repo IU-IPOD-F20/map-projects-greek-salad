@@ -46,6 +46,15 @@ def get_quiz(quiz_id: str):
     return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"error": error})
 
 
+@app.put("/quiz/{quiz_id}",
+         description="Answer on quiz")
+def question_answer(quiz_id: str, username: str, answer: str):
+    is_ok, error = db.add_answer(quiz_id, username, answer)
+    if is_ok:
+        return JSONResponse(status_code=status.HTTP_201_CREATED)
+    return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"error": error})
+
+
 @app.get("/hard_reset",
          description="Drop full database")
 def hard_reset():
