@@ -2,6 +2,7 @@ from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 
 from database import Database
+from models import *
 
 app = FastAPI(
     title="Quiz Game",
@@ -29,8 +30,14 @@ def create_user(quiz_id: str, username: str):
 
 @app.put("/quiz",
          description="Create new quiz")
-def create_quiz(quiz_id: str):
-    is_ok, error = db.add_quiz(quiz_id)
+def create_quiz(quiz: Quiz):
+    is_ok, error = db.add_quiz(quiz)
     if is_ok:
         return JSONResponse(status_code=status.HTTP_201_CREATED)
     return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"error": error})
+
+
+@app.get("/hard_reset",
+         description="Drop full database")
+def hard_reset():
+    return db.hard_reset()
