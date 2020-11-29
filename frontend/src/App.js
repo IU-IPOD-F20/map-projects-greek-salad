@@ -1,19 +1,36 @@
 import React from "react";
 import { Layout, Menu, Typography, Button } from "antd";
+import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
+
+import Teacher from "./Teacher";
+import Student from "./Student";
 import "./App.css";
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
 const App = () => {
+  const history = useHistory();
+
+  const handleUserChange = (user) => {
+    history.push(`/${user}`);
+  };
+
   return (
     <div className="App">
       <Layout>
         <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
           <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">Teacher</Menu.Item>
-            <Menu.Item key="2">Student</Menu.Item>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            onClick={(e) => {
+              console.log(e);
+              handleUserChange(e.key);
+            }}
+          >
+            <Menu.Item key="teacher">Teacher</Menu.Item>
+            <Menu.Item key="student">Student</Menu.Item>
           </Menu>
         </Header>
         <Content
@@ -33,15 +50,37 @@ const App = () => {
               minHeight: "calc(100vh - 130px)",
             }}
           >
-            {
-              <div className="userType">
-                <Title style={{ textAlign: "center" }}>Are you...?</Title>
-                <div className="userTypeWrapper">
-                  <Button type="text">Teacher</Button>
-                  <Button type="text">Student</Button>
+            <Switch>
+              <Route path="/teacher">
+                <Teacher />
+              </Route>
+              <Route path="/student">
+                <Student />
+              </Route>
+              <Route path="/" exact>
+                <div className="userType">
+                  <Title style={{ textAlign: "center" }}>Are you...?</Title>
+                  <div className="userTypeWrapper">
+                    <Button
+                      type="text"
+                      onClick={() => {
+                        history.push("/teacher");
+                      }}
+                    >
+                      Teacher
+                    </Button>
+                    <Button
+                      type="text"
+                      onClick={() => {
+                        history.push("/student");
+                      }}
+                    >
+                      Student
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            }
+              </Route>
+            </Switch>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
