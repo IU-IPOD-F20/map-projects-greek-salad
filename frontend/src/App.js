@@ -33,7 +33,15 @@ const App = () => {
               minHeight: "calc(100vh - 130px)",
             }}
           >
-            {selectUserType()}
+            {
+              <div className="userType">
+                <Title style={{ textAlign: "center" }}>Are you...?</Title>
+                <div className="userTypeWrapper">
+                  <Button type="text">Teacher</Button>
+                  <Button type="text">Student</Button>
+                </div>
+              </div>
+            }
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
@@ -41,18 +49,6 @@ const App = () => {
           Lera Vertash
         </Footer>
       </Layout>
-    </div>
-  );
-};
-
-const selectUserType = () => {
-  return (
-    <div className="userType">
-      <Title style={{ textAlign: "center" }}>Are you...?</Title>
-      <div className="userTypeWrapper">
-        <Button type="text">Teacher</Button>
-        <Button type="text">Student</Button>
-      </div>
     </div>
   );
 };

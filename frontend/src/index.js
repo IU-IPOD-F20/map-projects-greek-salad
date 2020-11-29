@@ -1,11 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React, { createContext } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import RootStore from "./stores/root";
+
+const StoreContext = createContext({});
+const StoreProvider = StoreContext.Provider;
+
+const rootStore = new RootStore({});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <StoreProvider value={rootStore}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </StoreProvider>,
+  document.getElementById("root")
 );

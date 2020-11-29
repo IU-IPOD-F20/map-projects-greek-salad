@@ -1,8 +1,16 @@
 import { action, observable } from "mobx";
 
-export default class User {
-  type = '';
+export default class UserStore {
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
 
-  @observable type = '';
+  type = "";
+
+  @observable type = "";
+
+  @action
+  setType = (type) => {
+    this.type = type;
+  };
 }
-
