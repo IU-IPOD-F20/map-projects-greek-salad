@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 
 import Teacher from "./Teacher";
 import Student from "./Student";
+import Quiz from "./Teacher/Quiz";
 import "./App.css";
 
 const { Header, Content, Footer } = Layout;
@@ -25,7 +26,6 @@ const App = () => {
             theme="dark"
             mode="horizontal"
             onClick={(e) => {
-              console.log(e);
               handleUserChange(e.key);
             }}
           >
@@ -56,6 +56,9 @@ const App = () => {
               </Route>
               <Route path="/student">
                 <Student />
+              </Route>
+              <Route path="/quiz/:id">
+                <Quiz />
               </Route>
               <Route path="/" exact>
                 <div className="userType">
