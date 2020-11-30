@@ -1,0 +1,27 @@
+.enterCode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ant-form {
+  display: flex;
+}
+
+.startWait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.questionWait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

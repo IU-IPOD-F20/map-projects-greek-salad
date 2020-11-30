@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Button, Space, Table, Modal, Form, Input } from "antd";
+import { Button, Space, Table, Modal, Form, Input, Progress } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
 const Quiz = () => {

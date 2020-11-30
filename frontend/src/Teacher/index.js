@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import { Table, Button, Space } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useHistory, Link } from "react-router-dom";
