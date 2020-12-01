@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 
 import Teacher from "./Teacher";
 import Student from "./Student";
+import Login from "./Teacher/Login";
 import Quiz from "./Teacher/Quiz";
 import "./App.css";
 
@@ -60,6 +61,9 @@ const App = () => {
               <Route path="/quiz/:id">
                 <Quiz />
               </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
               <Route path="/" exact>
                 <div className="userType">
                   <Title style={{ textAlign: "center" }}>Are you...?</Title>
@@ -67,7 +71,7 @@ const App = () => {
                     <Button
                       type="text"
                       onClick={() => {
-                        history.push("/teacher");
+                        history.push("/login");
                       }}
                     >
                       Teacher
