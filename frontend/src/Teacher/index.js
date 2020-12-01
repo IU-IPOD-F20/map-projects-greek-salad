@@ -5,6 +5,9 @@ import { useHistory, Link } from "react-router-dom";
 
 const Teacher = () => {
   const history = useHistory();
+  const [quizes, onChangeQuizes] = React.useState([
+    { key: 1, quizName: "Quiz 1", id: 343 },
+  ]);
 
   const columns = [
     {
@@ -19,19 +22,28 @@ const Teacher = () => {
     {
       title: "Action",
       key: "action",
-      render: (text, record) => {
+      render: (text, record, index) => {
         return (
           <Space size="middle">
             <Button>Start</Button>
             <Button>Modify</Button>
-            <Button danger>Delete</Button>
+            <Button
+              danger
+              onClick={() => {
+                console.log(index);
+                onChangeQuizes([
+                  ...quizes.slice(0, index),
+                  ...quizes.slice(index + 1, quizes.length),
+                ]);
+              }}
+            >
+              Delete
+            </Button>
           </Space>
         );
       },
     },
   ];
-
-  const dataSource = [{ key: 1, quizName: "Quiz 1", id: 343 }];
 
   return (
     <div className="teacher">
@@ -42,7 +54,7 @@ const Teacher = () => {
       >
         Add new quiz
       </Button>
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
+      <Table dataSource={quizes} columns={columns} pagination={false} />
     </div>
   );
 };
