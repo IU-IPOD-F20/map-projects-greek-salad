@@ -115,8 +115,6 @@ const Student = () => {
     update();
   }, [waitUntil]);
 
-  console.log(waitUntil);
-
   const onFinish = (e) => {
     onChangeStage("startWait");
   };

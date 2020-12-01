@@ -25,7 +25,9 @@ const Teacher = () => {
       render: (text, record, index) => {
         return (
           <Space size="middle">
-            <Button>Start</Button>
+            <Button onClick={() => history.push(`/quiz/${record.id}?start`)}>
+              Start
+            </Button>
             <Button onClick={() => history.push(`/quiz/${record.id}`)}>
               Modify
             </Button>
