@@ -19,31 +19,16 @@
 * React + Redux
 * Python + FastAPI
 
-## Sprints
-### Sprint 0
-* Filling Readme
-* Youtrack configuration
-* Choose management stack
-* Choose technology stack
+## Running the app
+1. Firstly, please install Node.js and NPM [here](https://www.npmjs.com/get-npm) if it is not installed yet
+2. Then clone our repository
+3. Run the following:
 
-### Sprint 1
-* CI/CD
-* User Stories
-* Fill backlog
-* MVP
-* Correct Readme
-* Design
-* Report 1
-
-### Sprint 2
-* Database connection
-* Report 2
-
-### Sprint 3
-* Add content
-* Polishing
-* Report 3
-* Final Report
+```
+cd frontend/
+npm i
+npm run start
+```
 
 ## Sprint reviews
 
