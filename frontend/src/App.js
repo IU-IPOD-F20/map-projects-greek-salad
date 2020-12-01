@@ -61,6 +61,9 @@ const App = () => {
               <Route path="/quiz/:id">
                 <Quiz />
               </Route>
+              <Route path="/quiz/">
+                <Quiz />
+              </Route>
               <Route path="/login">
                 <Login />
               </Route>

@@ -1,15 +1,15 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Button, Space, Table, Modal, Form, Input, Progress } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, SketchSquareFilled } from "@ant-design/icons";
+import QuestionModal from "./QuestionModal";
 
 const Quiz = () => {
   const location = useLocation();
   const history = useHistory();
-  const [form] = Form.useForm();
 
   const [quizId] = React.useState(
-    location.pathname.split("/").length > 2
+    !!location.pathname.split("/")[2]
       ? Number(location.pathname.split("/")[2])
       : -1
   );
@@ -47,12 +47,23 @@ const Quiz = () => {
           <Space size="middle">
             <Button
               onClick={() => {
+                onChangeQuestion(record);
                 onModalVisible(true);
               }}
             >
               Update
             </Button>
-            <Button danger>Delete</Button>
+            <Button
+              danger
+              onClick={() => {
+                setQuizData([
+                  ...quizData.slice(0, index),
+                  ...quizData.slice(index + 1, quizData.length),
+                ]);
+              }}
+            >
+              Delete
+            </Button>
           </Space>
         );
       },
@@ -65,37 +76,22 @@ const Quiz = () => {
         icon={<PlusCircleOutlined />}
         onClick={() => {
           onModalVisible(true);
+          onChangeQuestion({});
         }}
         style={{ marginBottom: "1rem" }}
       >
         Add new question
       </Button>
       <Table columns={columns} dataSource={quizData} pagination={false}></Table>
-      <Modal
-        title=""
+
+      <QuestionModal
         visible={modalVisible}
-        onOk={() => {
-          onModalVisible(false);
-        }}
+        onCreate={() => onModalVisible(false)}
         onCancel={() => {
           onModalVisible(false);
         }}
-      >
-        <Form form={form}>
-          <Form.Item label="Question">
-            <Input placeholder="input placeholder" />
-          </Form.Item>
-          <Form.Item label="Answer">
-            <Input placeholder="input placeholder" />
-          </Form.Item>
-          <Form.Item label="Time">
-            <Input placeholder="input placeholder" />
-          </Form.Item>
-          <Form.Item label="Cost">
-            <Input placeholder="input placeholder" />
-          </Form.Item>
-        </Form>
-      </Modal>
+        initialValues={question}
+      />
     </div>
   );
 };

@@ -26,7 +26,9 @@ const Teacher = () => {
         return (
           <Space size="middle">
             <Button>Start</Button>
-            <Button>Modify</Button>
+            <Button onClick={() => history.push(`/quiz/${record.id}`)}>
+              Modify
+            </Button>
             <Button
               danger
               onClick={() => {
