@@ -19,31 +19,28 @@
 * React + Redux
 * Python + FastAPI
 
-## Sprints
-### Sprint 0
-* Filling Readme
-* Youtrack configuration
-* Choose management stack
-* Choose technology stack
+## Running the app
+1. Firstly, please install Node.js and NPM [here](https://www.npmjs.com/get-npm) if it is not installed yet
+2. Then clone our repository
+3. Run the following:
 
-### Sprint 1
-* CI/CD
-* User Stories
-* Fill backlog
-* MVP
-* Correct Readme
-* Design
-* Report 1
+```
+cd frontend/
+npm i
+npm run start
+```
 
-### Sprint 2
-* Database connection
-* Report 2
-
-### Sprint 3
-* Add content
-* Polishing
-* Report 3
-* Final Report
+## Yotrack
+* Go to Agile boards section
+![alt text](Pictures/agile_boards.png)
+* In section "Unsheduled" you can see the product backlog - User Stories and Tasks with their bussiness priority
+![alt text](Pictures/backlog.png)
+* In section "Sprint 1" you can see the Sprint 1 backlog
+![alt text](Pictures/sprint1.png)
+* We configured integration with git so in each task we have a link on commit
+![alt text](Pictures/git_integration.png)
+* Also there is a description in each task - priority, estimation, department and so on
+![alt text](Pictures/task_description.png)
 
 ## Sprint reviews
 
