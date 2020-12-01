@@ -134,15 +134,28 @@ const Student = () => {
       case "enterCode":
         return (
           <div className="enterCode">
-            <Title>Enter Code</Title>
+            <Title>Quiz</Title>
             <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
               <Form.Item
-                label=""
+                label="Code"
                 name="code"
                 rules={[
                   {
                     required: true,
                     message: "Please input room code!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Login"
+                name="login"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your login!",
                   },
                 ]}
               >

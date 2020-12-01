@@ -4,10 +4,6 @@
   align-items: center;
 }
 
-.ant-form {
-  display: flex;
-}
-
 .startWait {
   display: flex;
   flex-direction: column;
