@@ -30,7 +30,7 @@ npm i
 npm run start
 ```
 
-## Yotrack
+## Youtrack
 * Go to Agile boards section
 ![alt text](Pictures/agile_boards.png)
 * In section "Unsheduled" you can see the product backlog - User Stories and Tasks with their bussiness priority
