@@ -30,6 +30,18 @@ npm i
 npm run start
 ```
 
+## Yotrack
+* Go to Agile boards section
+![alt text](Pictures/agile_boards.png)
+* In section "Unsheduled" you can see the product backlog - User Stories and Tasks with their bussiness priority
+![alt text](Pictures/backlog.png)
+* In section "Sprint 1" you can see the Sprint 1 backlog
+![alt text](Pictures/sprint1.png)
+* We configured integration with git so in each task we have a link on commit
+![alt text](Pictures/git_integration.png)
+* Also there is a description in each task - priority, estimation, department and so on
+![alt text](Pictures/task_description.png)
+
 ## Sprint reviews
 
 ![Sprint Evaluations](https://docs.google.com/spreadsheets/d/e/2PACX-1vTXIhfQzTkLutk3Wp2zWwAcCXQe7GZCZGWMZHp4nMPAgInjsxWohwH5hxwd4N9iyATx-H-QBAiTGWlj/pubchart?oid=553245236&format=image)
