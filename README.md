@@ -9,7 +9,7 @@
 3. [Valeriya Vertash](https://github.com/vvertash) - Scrum-master & Product owner
 
 ## Management stack
-* [Youtrack](https://www.jetbrains.com/youtrack/?gclid=Cj0KCQiA48j9BRC-ARIsAMQu3WTGPG-s7u2wGhI5a6H-fvgzikU7YPAsaNIJjj_cp0RemMHJXVWwVi0aAsPDEALw_wcB) for Project Backlog, Sprint Backlogs, Sprint Boards, Burndown Charts
+* [Youtrack](https://greek-salad.myjetbrains.com/youtrack/agiles/120-2/current) for Project Backlog, Sprint Backlogs, Sprint Boards, Burndown Charts
 * [Telegram](https://web.telegram.org/#/login) for fast chat communication during the day
 * [Zoom](https://zoom.us/ru-ru/meetings.html) for daily meetings, retrospectives and plannings
 * [Hatjitsu](https://hatjitsu.toolforge.org/) for Planning Poker
