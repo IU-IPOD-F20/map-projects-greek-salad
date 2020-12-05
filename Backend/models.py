@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from pydantic import BaseModel, Field
 
 
@@ -11,3 +11,9 @@ class SimpleQuestion(BaseModel):
 class Quiz(BaseModel):
     quiz_id: str = Field(example="1")
     questions: List[SimpleQuestion]
+
+
+class QuizAnswers(BaseModel):
+    username: str = Field(example="Salavat")
+    score: int = Field(example=1)
+    answers: List[Tuple[str, bool]] = Field(example=[("3.14", True), ("WrongAnswer", False)])

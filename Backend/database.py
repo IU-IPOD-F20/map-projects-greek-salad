@@ -77,3 +77,20 @@ class Database:
         answers.append(answer)
         return self.db.dadd(DBNames.USER_ANSWERS, (username, answers)), "Error in database"
 
+    def get_quiz_results(self, quiz_id: str) -> Tuple[bool, str, List[QuizAnswers]]:
+        if quiz_id not in self.db.lgetall(DBNames.QUIZZES_ID):
+            return False, "No such quiz id", []
+        questions = self.db.dget(DBNames.QUIZ_QUESTION, quiz_id)
+        usernames = self.db.dgetall(DBNames.USER_ANSWERS)
+        users_answers = []
+        for username in usernames:
+            score = 0
+            user_answers = []
+            answers = self.db.dget(DBNames.USER_ANSWERS, username)
+            for index, answer in enumerate(answers):
+                answers = questions[index]['answers']
+                is_true = answer in answers and answers[answer] > 0
+                user_answers.append((answer, is_true))
+                score += answers[answer] if answer in answers else 0
+            users_answers.append(QuizAnswers(username=username, score=score, answers=user_answers))
+        return True, "", users_answers
