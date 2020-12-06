@@ -12,6 +12,7 @@ class DBNames(str, Enum):
     QUIZZES_ID = "l_quizzes_id"
     QUIZ_QUESTION = "d_quiz_question"
     USER_ANSWERS = "d_user_answers"
+    TEACHER_QUIZZES = "d_quizzes_teacher"
 
 
 class Database:
@@ -53,24 +54,35 @@ class Database:
         usernames.append(username)
         return self.db.dadd(DBNames.QUIZZES_USERS, (quiz_id, usernames)), "Error in database"
 
-    def add_quiz(self, quiz: Quiz) -> Tuple[bool, str]:
+    def add_quiz(self, quiz: Quiz, user_id: str) -> Tuple[bool, str]:
         if quiz.quiz_id in self.db.lgetall(DBNames.QUIZZES_ID):
             if quiz.quiz_id == "-1":
                 return True, ""
             return False, "Already have such quiz id"
         is_ok = self.db.ladd(DBNames.QUIZZES_ID, quiz.quiz_id)
-        if is_ok:
-            is_ok = self.db.dadd(DBNames.QUIZ_QUESTION,
-                                 (quiz.quiz_id, [question.dict() for question in quiz.questions]))
-            if not is_ok:
-                self.db.lpop(DBNames.QUIZZES_ID, self.db.lgetall(DBNames.QUIZZES_ID).index())
+        quizzes = []
+        if self.db.dexists(DBNames.TEACHER_QUIZZES, user_id):
+            quizzes += self.db.dget(DBNames.TEACHER_QUIZZES, user_id)
+        quizzes.append(quiz.quiz_id)
+        is_ok &= self.db.dadd(DBNames.TEACHER_QUIZZES, (user_id, quizzes))
+        is_ok &= self.db.dadd(DBNames.QUIZ_QUESTION, (quiz.quiz_id, [question.dict() for question in quiz.questions]))
         return is_ok, "Error in database"
 
-    def get_quiz(self, quiz_id: str) -> Tuple[bool, str, Quiz]:
+    def get_quiz(self, user_id: str) -> Tuple[bool, str, List[Quiz]]:
+        if not self.db.dexists(DBNames.TEACHER_QUIZZES, user_id):
+            return True, "", []
+        quizzes = []
+        for quiz_id in self.db.dget(DBNames.TEACHER_QUIZZES, user_id):
+            is_ok, error, quiz = self._get_quiz(quiz_id)
+            if is_ok:
+                quizzes.append(quiz)
+        return True, "", quizzes
+
+    def _get_quiz(self, quiz_id: str) -> Tuple[bool, str, Quiz]:
         if quiz_id not in self.db.lgetall(DBNames.QUIZZES_ID):
             return False, "No such quiz id", Quiz()
         quiz = self.db.dget(DBNames.QUIZ_QUESTION, quiz_id)
-        return True, "", quiz
+        return True, "", Quiz(quiz_id=quiz_id, questions=quiz)
 
     def add_answer(self, quiz_id: str, username: str, answer: str) -> Tuple[bool, str]:
         if username not in self.db.dget(DBNames.QUIZZES_USERS, quiz_id):
