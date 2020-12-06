@@ -115,7 +115,14 @@ const Student = () => {
     update();
   }, [waitUntil]);
 
-  const onFinish = (e) => {
+  const onFinish = async (e) => {
+    const responce = await fetch(process.env.REACT_APP_BACKEND, {
+      method: "PUT",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ quiz_id: e.code, username: e.login }),
+    });
+    console.log(responce);
+
     onChangeStage("startWait");
   };
   const onFinishFailed = () => {};
