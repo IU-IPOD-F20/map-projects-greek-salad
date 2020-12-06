@@ -1,6 +1,8 @@
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
-
+from fastapi_users.authentication import CookieAuthentication
+from fastapi_users import FastAPIUsers
+from user_models import *
 from database import Database
 from models import *
 
@@ -68,3 +70,39 @@ def get_quiz_results(quiz_id: str):
          description="Drop full database")
 def hard_reset():
     return db.hard_reset()
+
+
+### REGISTRATION AND LOGIN
+
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
+
+SECRET = "VERYBIGSECRET"
+cookie_authentication = CookieAuthentication(secret=SECRET, lifetime_seconds=3600)
+
+fastapi_users = FastAPIUsers(
+    user_db,
+    [cookie_authentication],
+    User,
+    UserCreate,
+    UserUpdate,
+    UserDB,
+)
+
+app.include_router(
+    fastapi_users.get_auth_router(cookie_authentication),
+    prefix="/auth/cookie",
+    tags=["auth"],
+)
+
+app.include_router(
+    fastapi_users.get_register_router(),
+    prefix="/auth",
+    tags=["auth"],
+)
