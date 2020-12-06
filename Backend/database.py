@@ -73,12 +73,12 @@ class Database:
             return True, "", []
         quizzes = []
         for quiz_id in self.db.dget(DBNames.TEACHER_QUIZZES, user_id):
-            is_ok, error, quiz = self._get_quiz(quiz_id)
+            is_ok, error, quiz = self.get_quiz_by_id(quiz_id)
             if is_ok:
                 quizzes.append(quiz)
         return True, "", quizzes
 
-    def _get_quiz(self, quiz_id: str) -> Tuple[bool, str, Quiz]:
+    def get_quiz_by_id(self, quiz_id: str) -> Tuple[bool, str, Quiz]:
         if quiz_id not in self.db.lgetall(DBNames.QUIZZES_ID):
             return False, "No such quiz id", Quiz()
         quiz = self.db.dget(DBNames.QUIZ_QUESTION, quiz_id)

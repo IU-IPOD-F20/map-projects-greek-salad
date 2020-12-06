@@ -73,6 +73,15 @@ def get_quiz(user: User = Depends(fastapi_users.get_current_user)):
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
 
+@app.get("/quiz/{quiz_id}",
+         description="Get quiz", response_model=Quiz)
+def get_quiz(quiz_id: str):
+    is_ok, error, quiz = db.get_quiz_by_id(quiz_id)
+    if is_ok:
+        return quiz
+    return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"error": error})
+
+
 @app.put("/quiz/{quiz_id}",
          description="Answer on quiz")
 def question_answer(quiz_id: str, username: str, answer: str):
@@ -82,7 +91,7 @@ def question_answer(quiz_id: str, username: str, answer: str):
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
 
-@app.get("/quiz/{quiz_id}",
+@app.get("/quiz/{quiz_id}/results",
          description="Get quiz results", response_model=List[QuizAnswers])
 def get_quiz_results(quiz_id: str):
     is_ok, error, answers = db.get_quiz_results(quiz_id)
