@@ -4,6 +4,6 @@ fastapi
 pydantic
 pickleDB
 sqlalchemy
-fastapi-users[sqlalchemy]
+fastapi-users
 databases[sqlite]
 aiosqlite
