@@ -15,8 +15,8 @@ class DBNames(str, Enum):
 
 
 class Database:
-    def __init__(self):
-        self.db = pickledb.load('quiz.db', True)
+    def __init__(self, name: str):
+        self.db = pickledb.load(f'{name}.db', True)
         for dbname in DBNames:
             name = dbname.value
             if not self.db.get(name):
@@ -47,12 +47,16 @@ class Database:
         if self.db.dexists(DBNames.QUIZZES_USERS, quiz_id):
             usernames += self.db.dget(DBNames.QUIZZES_USERS, quiz_id)
             if username in usernames:
+                if quiz_id == "-1":
+                    return True, ""
                 return False, "User already in quiz"
         usernames.append(username)
         return self.db.dadd(DBNames.QUIZZES_USERS, (quiz_id, usernames)), "Error in database"
 
     def add_quiz(self, quiz: Quiz) -> Tuple[bool, str]:
         if quiz.quiz_id in self.db.lgetall(DBNames.QUIZZES_ID):
+            if quiz.quiz_id == "-1":
+                return True, ""
             return False, "Already have such quiz id"
         is_ok = self.db.ladd(DBNames.QUIZZES_ID, quiz.quiz_id)
         if is_ok:
@@ -74,6 +78,8 @@ class Database:
         answers = []
         if username in self.db.dgetall(DBNames.USER_ANSWERS):
             answers += self.db.dget(DBNames.USER_ANSWERS, username)
+            if answer in answers and quiz_id == "-1":
+                return True, ""
         answers.append(answer)
         return self.db.dadd(DBNames.USER_ANSWERS, (username, answers)), "Error in database"
 
