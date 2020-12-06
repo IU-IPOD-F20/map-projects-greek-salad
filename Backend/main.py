@@ -12,7 +12,7 @@ app = FastAPI(
     version="0.0.1",
 )
 
-db = Database()  # Change to https://fastapi.tiangolo.com/tutorial/sql-databases/#main-fastapi-app
+db = Database("quiz")  # TODO: Rewrite to https://fastapi.tiangolo.com/tutorial/sql-databases
 
 
 @app.get("/",
