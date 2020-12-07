@@ -43,15 +43,15 @@ npm run start
 ![alt text](Pictures/task_description.png)
 
 ## Testing
-![alt text](Pictures/teacher_testing.png)
-![alt text](Pictures/student_testing.png)
-![alt text](Pictures/snapshots.png)
+![alt text](Pictures/teacher_testing.jpg)
+![alt text](Pictures/student_testing.jpg)
+![alt text](Pictures/snapshots.jpg)
 
 ## Burndown
 # Sprint 1
-![alt text](Pictures/burndown1.png)
+![alt text](Pictures/burndown1.jpg)
 # Sprint 1
-![alt text](Pictures/burndown2.png)
+![alt text](Pictures/burndown2.jpg)
 
 ## Sprint reviews
 
