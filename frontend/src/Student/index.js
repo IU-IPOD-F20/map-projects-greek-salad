@@ -55,6 +55,9 @@ const Student = () => {
   const [currentQuestion, onQuestion] = React.useState(0);
   const [waitUntil, onWaitQuestion] = React.useState(null);
   const [userAnswers, onUserAnswer] = React.useState([]);
+  const [quizData, onQuizData] = React.useState([]);
+  const [quizCode, onQuizCode] = React.useState(-1);
+  const [userId, onUserId] = React.useState("");
 
   React.useEffect(() => {
     console.log(`Current stage: ${currentStage}`);
@@ -66,8 +69,8 @@ const Student = () => {
           onUserAnswer([
             ...userAnswers,
             {
-              question: quiz[0].name,
-              answer: quiz[0].answer,
+              question: quizData[0].name,
+              answer: quizData[0].answer,
               user: "",
             },
           ]);
@@ -90,8 +93,11 @@ const Student = () => {
 
         await sleep(timeDiv);
 
-        if (waitUntil + timeDiv >= Number(quiz[currentQuestion].time) * 1000) {
-          if (currentQuestion + 1 >= quiz.length) {
+        if (
+          waitUntil + timeDiv >=
+          Number(quizData[currentQuestion].time) * 1000
+        ) {
+          if (currentQuestion + 1 >= quizData.length) {
             onChangeStage("result");
           } else {
             if (currentStage === "questionWait") onChangeStage("question");
@@ -99,8 +105,8 @@ const Student = () => {
             onUserAnswer([
               ...userAnswers,
               {
-                question: quiz[currentQuestion + 1].name,
-                answer: quiz[currentQuestion + 1].answer,
+                question: quizData[currentQuestion + 1].name,
+                answer: quizData[currentQuestion + 1].answer,
                 user: "",
               },
             ]);
@@ -115,15 +121,46 @@ const Student = () => {
     update();
   }, [waitUntil]);
 
-  const onFinish = (e) => {
-    onChangeStage("startWait");
+  const onFinish = async (e) => {
+    const responce = await fetch(
+      process.env.REACT_APP_BACKEND +
+        `/user?quiz_id=${e.code}&username=${e.login}`,
+      {
+        method: "PUT",
+      }
+    );
+    if (responce.status === 200 || responce.status === 201) {
+      onQuizCode(e.code);
+      onUserId(e.login);
+      const res = await fetch(
+        process.env.REACT_APP_BACKEND + `/quiz/${e.code}`
+      );
+      const body = await res.json();
+      onQuizData(
+        body.questions.map((i, idx) => ({
+          id: idx,
+          name: i.question,
+          answer: Object.keys(i.answers)[0],
+          time: "10",
+          cost: Number(Object.values(i.answers)[0]),
+        }))
+      );
+      onChangeStage("startWait");
+    }
   };
   const onFinishFailed = () => {};
 
-  const onSubmitAnswer = (e) => {
+  const onSubmitAnswer = async (e) => {
     let last = userAnswers[userAnswers.length - 1];
     last.user = e.answer;
     onUserAnswer([...userAnswers.slice(0, userAnswers.length - 1), last]);
+
+    const res = await fetch(
+      process.env.REACT_APP_BACKEND +
+        `/quiz/${quizCode}?username=${userId}&answer=${e.answer}`,
+      { method: "PUT" }
+    );
+
     onChangeStage("questionWait");
   };
 
@@ -178,7 +215,7 @@ const Student = () => {
       case "question":
         return (
           <div className="question">
-            <Title>{quiz[currentQuestion].name}</Title>
+            <Title>{quizData[currentQuestion].name}</Title>
             <Form onFinish={onSubmitAnswer}>
               <Form.Item name="answer">
                 <Input />
@@ -191,7 +228,8 @@ const Student = () => {
             </Form>
             <Progress
               percent={
-                (waitUntil / (1000 * Number(quiz[currentQuestion].time))) * 100
+                (waitUntil / (1000 * Number(quizData[currentQuestion].time))) *
+                100
               }
               showInfo={false}
               status="active"
@@ -204,7 +242,8 @@ const Student = () => {
             <Title>Waiting other students</Title>
             <Progress
               percent={
-                (waitUntil / (1000 * Number(quiz[currentQuestion].time))) * 100
+                (waitUntil / (1000 * Number(quizData[currentQuestion].time))) *
+                100
               }
               showInfo={false}
               status="active"

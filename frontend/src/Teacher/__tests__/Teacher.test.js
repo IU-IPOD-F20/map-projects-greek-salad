@@ -6,7 +6,7 @@ import { shallow, configure } from 'enzyme';
 
 configure({adapter: new Adapter()});
 
-test("student initial render app", () => {
+test("teacher initial render app", () => {
   const wrapper = shallow(
     <MemoryRouter initialEntries={["/teacher"]}>
       <Teacher />
