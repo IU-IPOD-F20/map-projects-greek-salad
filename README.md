@@ -48,9 +48,7 @@ npm run start
 ![alt text](Pictures/snapshots.jpg)
 
 ## Burndown
-# Sprint 1
 ![alt text](Pictures/burndown1.jpg)
-# Sprint 2
 ![alt text](Pictures/burndown2.jpg)
 
 ## Sprint reviews
