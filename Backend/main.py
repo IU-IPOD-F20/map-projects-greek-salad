@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status, Depends, HTTPException
 from fastapi.responses import JSONResponse
-from fastapi_users.authentication import CookieAuthentication
+from fastapi_users.authentication import JWTAuthentication
 from fastapi_users import FastAPIUsers
 from user_models import *
 from database import Database
@@ -26,11 +26,11 @@ app.add_middleware(
 )
 
 SECRET = "VERYBIGSECRET"
-cookie_authentication = CookieAuthentication(secret=SECRET, lifetime_seconds=3600)
+jwt_authentication = JWTAuthentication(secret=SECRET, lifetime_seconds=3600)
 
 fastapi_users = FastAPIUsers(
     user_db,
-    [cookie_authentication],
+    [jwt_authentication],
     User,
     UserCreate,
     UserUpdate,
@@ -65,7 +65,7 @@ def create_quiz(quiz: Quiz, user: User = Depends(fastapi_users.get_current_user)
 
 
 @app.get("/quiz",
-         description="Get quiz", response_model=List[Quiz])
+         description="Get user quizzes", response_model=List[Quiz])
 def get_quiz(user: User = Depends(fastapi_users.get_current_user)):
     is_ok, error, quiz = db.get_quiz(user.email)
     if is_ok:
@@ -74,7 +74,7 @@ def get_quiz(user: User = Depends(fastapi_users.get_current_user)):
 
 
 @app.get("/quiz/{quiz_id}",
-         description="Get quiz", response_model=Quiz)
+         description="Get quiz by id", response_model=Quiz)
 def get_quiz(quiz_id: str):
     is_ok, error, quiz = db.get_quiz_by_id(quiz_id)
     if is_ok:
@@ -119,8 +119,8 @@ async def shutdown():
 
 
 app.include_router(
-    fastapi_users.get_auth_router(cookie_authentication),
-    prefix="/auth/cookie",
+    fastapi_users.get_auth_router(jwt_authentication),
+    prefix="/auth/token",
     tags=["auth"],
 )
 
