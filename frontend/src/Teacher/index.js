@@ -16,6 +16,7 @@ const Teacher = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const body = await res.json();
+      console.log(body);
       onChangeQuizes(body);
     };
     firstLoad();
@@ -46,7 +47,6 @@ const Teacher = () => {
             <Button
               danger
               onClick={() => {
-                console.log(index);
                 onChangeQuizes([
                   ...quizes.slice(0, index),
                   ...quizes.slice(index + 1, quizes.length),

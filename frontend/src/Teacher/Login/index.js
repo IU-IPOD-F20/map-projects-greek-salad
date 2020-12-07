@@ -51,7 +51,6 @@ const Login = () => {
   const [form] = Form.useForm();
 
   const onFinishLogin = async (values) => {
-    console.log(values);
     const response = await fetch(
       process.env.REACT_APP_BACKEND + "/auth/token/login",
       {
@@ -65,8 +64,6 @@ const Login = () => {
       }
     );
     const body = await response.json();
-    // if(response.)
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("token", body.access_token);
     } else {

@@ -76,6 +76,8 @@ const Quiz = () => {
 
   const [quizData, setQuizData] = React.useState([]);
 
+  const [studentResults, setStudentResults] = React.useState([]);
+
   React.useEffect(() => {
     const getQuizData = async () => {
       const res = await fetch(
@@ -86,7 +88,6 @@ const Quiz = () => {
         }
       );
       const body = await res.json();
-      console.log(body);
 
       setQuizData(
         body.questions.map((i) => ({
@@ -96,26 +97,31 @@ const Quiz = () => {
           cost: Object.values(i.answers)[0],
         }))
       );
-      return body;
     };
 
     if (quizId !== -1) {
-      console.log(getQuizData());
-      // setQuizData([]);
+      getQuizData();
     }
   }, []);
 
   React.useEffect(() => {
     console.log(`Current stage: ${currentStage}`);
 
-    const stateManager = async () => {};
+    const stateManager = async () => {
+      if (currentStage === "result") {
+        const res = fetch(
+          process.env.REACT_APP_BACKEND + `/quiz/${quizId}/results`
+        );
+        const body = res.json();
+        setStudentResults(body);
+      }
+    };
 
     stateManager();
   }, [currentStage]);
 
   React.useEffect(() => {
     const update = async () => {
-      console.log(currentStage);
       if (currentStage === "question" || currentStage === "questionWait") {
         const timeDiv = 1000;
 
@@ -206,11 +212,11 @@ const Quiz = () => {
               </Button>
               <Button
                 onClick={() => {
-                  onChangeStage("question");
+                  onChangeStage("result");
                   onWaitQuestion(0);
                 }}
               >
-                Start quiz
+                Quiz results
               </Button>
               <Button
                 onClick={async () => {
@@ -252,7 +258,6 @@ const Quiz = () => {
               visible={modalVisible}
               onCreate={(e) => {
                 onModalVisible(false);
-                console.log(e);
                 setQuizData([...quizData, e]);
               }}
               onCancel={() => {
