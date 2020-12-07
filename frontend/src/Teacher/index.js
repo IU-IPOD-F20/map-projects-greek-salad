@@ -6,15 +6,17 @@ import { useHistory, Link } from "react-router-dom";
 const Teacher = () => {
   const history = useHistory();
   const [quizes, onChangeQuizes] = React.useState([
-    { key: 1, quizName: "Quiz 1", id: 343 },
+    // { key: 1, quizName: "Quiz 1", id: 343 },
   ]);
 
   React.useEffect(() => {
     const firstLoad = async () => {
       const res = await fetch(process.env.REACT_APP_BACKEND + "/quiz", {
         method: "GET",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      console.log(res);
+      const body = await res.json();
+      onChangeQuizes(body);
     };
     firstLoad();
   }, []);
@@ -22,11 +24,11 @@ const Teacher = () => {
   const columns = [
     {
       title: "Quiz",
-      dataIndex: "quizName",
-      key: "quizName",
+      dataIndex: "quiz_id",
+      key: "quiz_id",
       width: "90%",
       render: (text, record, index) => (
-        <Link to={`/quiz/${record.id}`}>{record.quizName}</Link>
+        <Link to={`/quiz/${record.quiz_id}`}>{record.quiz_id}</Link>
       ),
     },
     {

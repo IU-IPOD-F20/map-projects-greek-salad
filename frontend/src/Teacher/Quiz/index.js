@@ -11,7 +11,11 @@ import {
   Typography,
   Spin,
 } from "antd";
-import { PlusCircleOutlined, SketchSquareFilled } from "@ant-design/icons";
+import {
+  ConsoleSqlOutlined,
+  PlusCircleOutlined,
+  SketchSquareFilled,
+} from "@ant-design/icons";
 import QuestionModal from "./QuestionModal";
 
 /**
@@ -73,16 +77,31 @@ const Quiz = () => {
   const [quizData, setQuizData] = React.useState([]);
 
   React.useEffect(() => {
-    if (quizId !== -1) {
-      setQuizData([
+    const getQuizData = async () => {
+      const res = await fetch(
+        process.env.REACT_APP_BACKEND + `/quiz/${quizId}`,
         {
-          id: 1,
-          name: "Why do you never see elephants hiding in trees?",
-          answer: "Because they're very good at it.",
-          time: "10",
-          cost: 1,
-        },
-      ]);
+          method: "GET",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      const body = await res.json();
+      console.log(body);
+
+      setQuizData(
+        body.questions.map((i) => ({
+          name: i.question,
+          answer: Object.keys(i.answers)[0],
+          time: 10,
+          cost: Object.values(i.answers)[0],
+        }))
+      );
+      return body;
+    };
+
+    if (quizId !== -1) {
+      console.log(getQuizData());
+      // setQuizData([]);
     }
   }, []);
 
@@ -102,8 +121,11 @@ const Quiz = () => {
 
         await sleep(timeDiv);
 
-        if (waitUntil + timeDiv >= Number(quiz[currentQuestion].time) * 1000) {
-          if (currentQuestion + 1 >= quiz.length) {
+        if (
+          waitUntil + timeDiv >=
+          Number(quizData[currentQuestion].time) * 1000
+        ) {
+          if (currentQuestion + 1 >= quizData.length) {
             onChangeStage("result");
           } else {
             onQuestion(currentQuestion + 1);
@@ -190,6 +212,35 @@ const Quiz = () => {
               >
                 Start quiz
               </Button>
+              <Button
+                onClick={async () => {
+                  const res = await fetch(
+                    process.env.REACT_APP_BACKEND + "/quiz",
+                    {
+                      method: "PUT",
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                      body: JSON.stringify({
+                        quiz_id: makeid(6),
+                        questions: [
+                          ...quizData.map((i) => {
+                            return {
+                              question: i.name,
+                              answers: { [i.answer]: i.cost },
+                            };
+                          }),
+                        ],
+                      }),
+                    }
+                  );
+                  const body = await res.json();
+                }}
+              >
+                Save
+              </Button>
             </Space>
             <Table
               columns={columns}
@@ -199,7 +250,11 @@ const Quiz = () => {
 
             <QuestionModal
               visible={modalVisible}
-              onCreate={() => onModalVisible(false)}
+              onCreate={(e) => {
+                onModalVisible(false);
+                console.log(e);
+                setQuizData([...quizData, e]);
+              }}
               onCancel={() => {
                 onModalVisible(false);
               }}
@@ -227,7 +282,7 @@ const Quiz = () => {
       case "question":
         return (
           <div className="question">
-            <Title>{quiz[currentQuestion].name}</Title>
+            <Title>{quizData[currentQuestion].name}</Title>
             <Title level={3}>Already answered</Title>
             <Table
               columns={questionColumns}
@@ -237,7 +292,8 @@ const Quiz = () => {
             />
             <Progress
               percent={
-                (waitUntil / (1000 * Number(quiz[currentQuestion].time))) * 100
+                (waitUntil / (1000 * Number(quizData[currentQuestion].time))) *
+                100
               }
               showInfo={false}
               status="active"

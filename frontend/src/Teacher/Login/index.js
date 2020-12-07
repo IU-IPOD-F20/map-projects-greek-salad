@@ -72,7 +72,6 @@ const Login = () => {
     } else {
       message.error("provide valid login and password");
     }
-    console.log(body.access_token);
     history.push("/teacher");
   };
 
@@ -89,8 +88,6 @@ const Login = () => {
         }),
       }
     );
-    console.log(response.json());
-
     // history.push("/login");
     onLogin(true);
   };
