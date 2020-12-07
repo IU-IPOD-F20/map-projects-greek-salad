@@ -50,7 +50,7 @@ npm run start
 ## Burndown
 # Sprint 1
 ![alt text](Pictures/burndown1.jpg)
-# Sprint 1
+# Sprint 2
 ![alt text](Pictures/burndown2.jpg)
 
 ## Sprint reviews
