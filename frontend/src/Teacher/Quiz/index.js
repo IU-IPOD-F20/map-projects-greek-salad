@@ -11,7 +11,11 @@ import {
   Typography,
   Spin,
 } from "antd";
-import { PlusCircleOutlined, SketchSquareFilled } from "@ant-design/icons";
+import {
+  ConsoleSqlOutlined,
+  PlusCircleOutlined,
+  SketchSquareFilled,
+} from "@ant-design/icons";
 import QuestionModal from "./QuestionModal";
 
 /**
@@ -72,38 +76,64 @@ const Quiz = () => {
 
   const [quizData, setQuizData] = React.useState([]);
 
+  const [studentResults, setStudentResults] = React.useState([]);
+
   React.useEffect(() => {
-    if (quizId !== -1) {
-      setQuizData([
+    const getQuizData = async () => {
+      const res = await fetch(
+        process.env.REACT_APP_BACKEND + `/quiz/${quizId}`,
         {
-          id: 1,
-          name: "Why do you never see elephants hiding in trees?",
-          answer: "Because they're very good at it.",
-          time: "10",
-          cost: 1,
-        },
-      ]);
+          method: "GET",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      const body = await res.json();
+
+      setQuizData(
+        body.questions.map((i) => ({
+          name: i.question,
+          answer: Object.keys(i.answers)[0],
+          time: 10,
+          cost: Object.values(i.answers)[0],
+        }))
+      );
+    };
+
+    if (quizId !== -1) {
+      getQuizData();
     }
   }, []);
 
   React.useEffect(() => {
     console.log(`Current stage: ${currentStage}`);
 
-    const stateManager = async () => {};
+    const stateManager = async () => {
+      if (currentStage === "result") {
+        const res = await fetch(
+          process.env.REACT_APP_BACKEND + `/quiz/${quizId}/results`,
+          { method: "GET" }
+        );
+        const body = await res.json();
+        console.log(body);
+        setStudentResults(body);
+      }
+    };
 
     stateManager();
   }, [currentStage]);
 
   React.useEffect(() => {
     const update = async () => {
-      console.log(currentStage);
       if (currentStage === "question" || currentStage === "questionWait") {
         const timeDiv = 1000;
 
         await sleep(timeDiv);
 
-        if (waitUntil + timeDiv >= Number(quiz[currentQuestion].time) * 1000) {
-          if (currentQuestion + 1 >= quiz.length) {
+        if (
+          waitUntil + timeDiv >=
+          Number(quizData[currentQuestion].time) * 1000
+        ) {
+          if (currentQuestion + 1 >= quizData.length) {
             onChangeStage("result");
           } else {
             onQuestion(currentQuestion + 1);
@@ -161,9 +191,9 @@ const Quiz = () => {
   ];
 
   const allResultsColumns = [
-    { title: "Student", dataIndex: "login", key: "login" },
-    { title: "Question # 1", dataIndex: "q1", key: "q1" },
-    { title: "Question # 2", dataIndex: "q2", key: "q2" },
+    { title: "Student", dataIndex: "username", key: "username" },
+    { title: "Score", dataIndex: "score", key: "score" },
+    { title: "Answers", dataIndex: "answers", key: "answers" },
   ];
 
   const renderStage = (stage) => {
@@ -184,11 +214,40 @@ const Quiz = () => {
               </Button>
               <Button
                 onClick={() => {
-                  onChangeStage("question");
-                  onWaitQuestion(0);
+                  onChangeStage("result");
+                  // onWaitQuestion(0);
                 }}
               >
-                Start quiz
+                Quiz results
+              </Button>
+              <Button
+                onClick={async () => {
+                  const res = await fetch(
+                    process.env.REACT_APP_BACKEND + "/quiz",
+                    {
+                      method: "PUT",
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                      body: JSON.stringify({
+                        quiz_id: makeid(6),
+                        questions: [
+                          ...quizData.map((i) => {
+                            return {
+                              question: i.name,
+                              answers: { [i.answer]: i.cost },
+                            };
+                          }),
+                        ],
+                      }),
+                    }
+                  );
+                  const body = await res.json();
+                }}
+              >
+                Save
               </Button>
             </Space>
             <Table
@@ -199,7 +258,10 @@ const Quiz = () => {
 
             <QuestionModal
               visible={modalVisible}
-              onCreate={() => onModalVisible(false)}
+              onCreate={(e) => {
+                onModalVisible(false);
+                setQuizData([...quizData, e]);
+              }}
               onCancel={() => {
                 onModalVisible(false);
               }}
@@ -227,7 +289,7 @@ const Quiz = () => {
       case "question":
         return (
           <div className="question">
-            <Title>{quiz[currentQuestion].name}</Title>
+            <Title>{quizData[currentQuestion].name}</Title>
             <Title level={3}>Already answered</Title>
             <Table
               columns={questionColumns}
@@ -237,7 +299,8 @@ const Quiz = () => {
             />
             <Progress
               percent={
-                (waitUntil / (1000 * Number(quiz[currentQuestion].time))) * 100
+                (waitUntil / (1000 * Number(quizData[currentQuestion].time))) *
+                100
               }
               showInfo={false}
               status="active"
@@ -249,9 +312,7 @@ const Quiz = () => {
           <div className="result">
             <Title>Students' results</Title>
             <Table
-              dataSource={[
-                { login: "Student 1", q1: "Answer 1", q2: "Answer 2" },
-              ]}
+              dataSource={studentResults}
               columns={allResultsColumns}
             />
           </div>

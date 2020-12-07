@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`quiz initial render app 1`] = `ShallowWrapper {}`;
+
+exports[`student initial render app 1`] = `ShallowWrapper {}`;

@@ -4,3 +4,9 @@ fastapi
 pydantic
 pickleDB
 sqlalchemy
+fastapi-users
+databases[sqlite]
+aiosqlite
+requests
+pytest
+pytest-cov
