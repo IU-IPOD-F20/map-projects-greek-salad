@@ -18,21 +18,45 @@ test_quiz = {
     ]
 }
 
+token = "TOKEN"
+
+test_teacher = {
+    "email": "test@test.com",
+    "password": "test",
+}
+
 
 def test_read_main():
     response = client.get("/")
     assert response.status_code == 200
 
 
+def test_login():
+    client.post("/auth/register", json=test_teacher,
+                headers={"accept": "application/json", "Content-Type": "application/x-www-form-urlencoded"})
+    response = client.post("/auth/token/login",
+                           data={"username": test_teacher['email'], "password": test_teacher['password']},
+                           headers={"Content-Type": "application/x-www-form-urlencoded"})
+    global token
+    token = f"Bearer {response.json()['access_token']}"
+    assert response.status_code == 200
+
+
 def test_add_quiz():
-    response = client.put("/quiz", json=test_quiz)
+    response = client.put("/quiz", json=test_quiz, headers={"Authorization": token})
     assert response.status_code == 201
 
 
 def test_get_quiz():
-    response = client.get("/quiz", params={"quiz_id": "-1"})
+    response = client.get("/quiz", headers={"Authorization": token})
     assert response.status_code == 200
-    assert response.json() == test_quiz['questions']
+    assert response.json() == [test_quiz]
+
+
+def test_get_quiz_by_id():
+    response = client.get("/quiz/-1")
+    assert response.status_code == 200
+    assert response.json() == test_quiz
 
 
 def test_add_user():
@@ -46,6 +70,6 @@ def test_add_answer():
 
 
 def test_get_results():
-    response = client.get("/quiz/-1")
+    response = client.get("/quiz/-1/results")
     assert response.status_code == 200
     assert "test" in [res["username"] for res in response.json()]
