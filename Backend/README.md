@@ -8,26 +8,9 @@ pip3 install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-## Code coverage
+## Test
 ```commandline
 python -m pytest --cov=main tests/
-```
-```commandline
-============================= test session starts ==============================
-platform linux -- Python 3.8.6, pytest-6.1.2, py-1.9.0, pluggy-0.13.1
-rootdir: /home/apo/work/map-projects-greek-salad/Backend
-plugins: cov-2.10.1
-collected 8 items
-
-tests/test_main.py ........                                              [100%]
-
------------ coverage: platform linux, python 3.8.6-final-0 -----------
-Name      Stmts   Miss  Cover
------------------------------
-main.py      65      9    86%
-
-
-============================== 8 passed in 0.83s ===============================
 ```
 
 ### API Documentation
