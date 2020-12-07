@@ -42,6 +42,17 @@ npm run start
 * Also there is a description in each task - priority, estimation, department and so on
 ![alt text](Pictures/task_description.png)
 
+## Testing
+![alt text](Pictures/teacher_testing.png)
+![alt text](Pictures/student_testing.png)
+![alt text](Pictures/snapshots.png)
+
+## Burndown
+# Sprint 1
+![alt text](Pictures/burndown1.png)
+# Sprint 1
+![alt text](Pictures/burndown2.png)
+
 ## Sprint reviews
 
 ![Sprint Evaluations](https://docs.google.com/spreadsheets/d/e/2PACX-1vTXIhfQzTkLutk3Wp2zWwAcCXQe7GZCZGWMZHp4nMPAgInjsxWohwH5hxwd4N9iyATx-H-QBAiTGWlj/pubchart?oid=553245236&format=image)
