@@ -9,6 +9,16 @@ const Teacher = () => {
     { key: 1, quizName: "Quiz 1", id: 343 },
   ]);
 
+  React.useEffect(() => {
+    const firstLoad = async () => {
+      const res = await fetch(process.env.REACT_APP_BACKEND + "/quiz", {
+        method: "GET",
+      });
+      console.log(res);
+    };
+    firstLoad();
+  }, []);
+
   const columns = [
     {
       title: "Quiz",

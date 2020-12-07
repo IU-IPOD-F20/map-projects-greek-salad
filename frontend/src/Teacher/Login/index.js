@@ -56,15 +56,16 @@ const Login = () => {
       process.env.REACT_APP_BACKEND + "/auth/cookie/login",
       {
         method: "POST",
-        body: JSON.stringify({
-          username: values.email,
-          password: values.password,
-        }),
+        // body: `username=${values.email}&password=${values.password}`,
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `username=${values.email}&password=${values.password}`,
       }
     );
-
     console.log(response);
-    // history.push("/teacher");
+    history.push("/teacher");
   };
 
   const onFinishSignup = async (values) => {
@@ -82,7 +83,7 @@ const Login = () => {
     );
     console.log(response.json());
 
-    history.push("/teacher");
+    history.push("/login");
   };
 
   return (
