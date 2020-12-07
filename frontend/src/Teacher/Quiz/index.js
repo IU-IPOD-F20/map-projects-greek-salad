@@ -109,10 +109,12 @@ const Quiz = () => {
 
     const stateManager = async () => {
       if (currentStage === "result") {
-        const res = fetch(
-          process.env.REACT_APP_BACKEND + `/quiz/${quizId}/results`
+        const res = await fetch(
+          process.env.REACT_APP_BACKEND + `/quiz/${quizId}/results`,
+          { method: "GET" }
         );
-        const body = res.json();
+        const body = await res.json();
+        console.log(body);
         setStudentResults(body);
       }
     };
@@ -189,9 +191,9 @@ const Quiz = () => {
   ];
 
   const allResultsColumns = [
-    { title: "Student", dataIndex: "login", key: "login" },
-    { title: "Question # 1", dataIndex: "q1", key: "q1" },
-    { title: "Question # 2", dataIndex: "q2", key: "q2" },
+    { title: "Student", dataIndex: "username", key: "username" },
+    { title: "Score", dataIndex: "score", key: "score" },
+    { title: "Answers", dataIndex: "answers", key: "answers" },
   ];
 
   const renderStage = (stage) => {
@@ -213,7 +215,7 @@ const Quiz = () => {
               <Button
                 onClick={() => {
                   onChangeStage("result");
-                  onWaitQuestion(0);
+                  // onWaitQuestion(0);
                 }}
               >
                 Quiz results
@@ -310,9 +312,7 @@ const Quiz = () => {
           <div className="result">
             <Title>Students' results</Title>
             <Table
-              dataSource={[
-                { login: "Student 1", q1: "Answer 1", q2: "Answer 2" },
-              ]}
+              dataSource={studentResults}
               columns={allResultsColumns}
             />
           </div>
