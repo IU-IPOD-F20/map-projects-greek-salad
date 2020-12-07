@@ -43,9 +43,12 @@ npm run start
 ![alt text](Pictures/task_description.png)
 
 ## Testing
+### Frontend
 ![alt text](Pictures/teacher_testing.jpg)
 ![alt text](Pictures/student_testing.jpg)
 ![alt text](Pictures/snapshots.jpg)
+### Backend
+![alt text](https://imgur.com/qWPNgSY.png)
 
 ## Burndown
 ![alt text](Pictures/burndown1.jpg)
