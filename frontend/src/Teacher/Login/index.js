@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Checkbox, Typography } from "antd";
+import { Form, Input, Button, Checkbox, Typography, message } from "antd";
 import { useHistory } from "react-router-dom";
 
 import "./style.css";
@@ -53,7 +53,7 @@ const Login = () => {
   const onFinishLogin = async (values) => {
     console.log(values);
     const response = await fetch(
-      process.env.REACT_APP_BACKEND + "/auth/cookie/login",
+      process.env.REACT_APP_BACKEND + "/auth/token/login",
       {
         method: "POST",
         // body: `username=${values.email}&password=${values.password}`,
@@ -61,10 +61,18 @@ const Login = () => {
           accept: "application/json",
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: `username=${values.email}&password=${values.password}`,
+        body: "username=" + values.email + "&password=" + values.password,
       }
     );
+    const body = await response.json();
+    // if(response.)
     console.log(response);
+    if (response.status === 200) {
+      localStorage.setItem("token", body.access_token);
+    } else {
+      message.error("provide valid login and password");
+    }
+    console.log(body.access_token);
     history.push("/teacher");
   };
 
@@ -83,7 +91,8 @@ const Login = () => {
     );
     console.log(response.json());
 
-    history.push("/login");
+    // history.push("/login");
+    onLogin(true);
   };
 
   return (
