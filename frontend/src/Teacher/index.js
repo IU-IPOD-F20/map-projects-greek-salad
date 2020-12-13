@@ -16,8 +16,11 @@ const Teacher = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const body = await res.json();
-      console.log(body);
-      onChangeQuizes(body);
+      if (res.status === 400 || res.status === 401) {
+        history.push("/login");
+      } else {
+        onChangeQuizes(body);
+      }
     };
     firstLoad();
   }, []);
@@ -38,11 +41,30 @@ const Teacher = () => {
       render: (text, record, index) => {
         return (
           <Space size="middle">
-            <Button onClick={() => history.push(`/quiz/${record.id}?start`)}>
+            <Button
+              onClick={() => history.push(`/quiz/${record.quiz_id}?start`)}
+            >
               Start
             </Button>
-            <Button onClick={() => history.push(`/quiz/${record.id}`)}>
+            <Button onClick={() => history.push(`/quiz/${record.quiz_id}`)}>
               Modify
+            </Button>
+            <Button
+              onClick={async () => {
+                const res = await fetch(
+                  process.env.REACT_APP_BACKEND + `/csv/${record.quiz_id}`,
+                  {
+                    method: "GET",
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  }
+                );
+                const body = await res;
+                console.log(body);
+              }}
+            >
+              Download CSV
             </Button>
             <Button
               danger

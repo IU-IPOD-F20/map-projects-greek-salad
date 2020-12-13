@@ -87,7 +87,6 @@ const Student = () => {
 
   React.useEffect(() => {
     const update = async () => {
-      console.log(currentStage);
       if (currentStage === "question" || currentStage === "questionWait") {
         const timeDiv = 1000;
 
