@@ -67,6 +67,7 @@ const Login = () => {
     if (response.status === 200) {
       localStorage.setItem("token", body.access_token);
       history.push("/teacher");
+      window.location.reload();
     } else {
       message.error("provide valid login and password");
     }
