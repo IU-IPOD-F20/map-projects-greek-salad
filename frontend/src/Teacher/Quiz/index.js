@@ -10,11 +10,13 @@ import {
   Progress,
   Typography,
   Spin,
+  Upload,
 } from "antd";
 import {
   ConsoleSqlOutlined,
   PlusCircleOutlined,
   SketchSquareFilled,
+  UploadOutlined,
 } from "@ant-design/icons";
 import QuestionModal from "./QuestionModal";
 
@@ -114,7 +116,6 @@ const Quiz = () => {
           { method: "GET" }
         );
         const body = await res.json();
-        console.log(body);
         setStudentResults(body);
       }
     };
@@ -212,6 +213,16 @@ const Quiz = () => {
               >
                 Add new question
               </Button>
+              <Upload
+                action={process.env.REACT_APP_BACKEND + `/csv/${quizId}`}
+                headers={{
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                }}
+                method="PUT"
+              >
+                <Button icon={<UploadOutlined />}>Upload CSV</Button>
+              </Upload>
+
               <Button
                 onClick={() => {
                   onChangeStage("result");
@@ -245,6 +256,9 @@ const Quiz = () => {
                     }
                   );
                   const body = await res.json();
+                  if (res.status === 201) {
+                    history.push("/teacher");
+                  }
                 }}
               >
                 Save
@@ -274,16 +288,16 @@ const Quiz = () => {
           <div className="enterCode">
             <Title>Quiz</Title>
             <Text>
-              Your code is: <Title level={6}>{makeid(6)}</Title>
+              Your code is: <Title level={6}>{quizId}</Title>
             </Text>
-            <Button
+            {/* <Button
               onClick={() => {
                 onChangeStage("question");
                 onWaitQuestion(0);
               }}
             >
               Start quiz
-            </Button>
+            </Button> */}
           </div>
         );
       case "question":
@@ -311,10 +325,7 @@ const Quiz = () => {
         return (
           <div className="result">
             <Title>Students' results</Title>
-            <Table
-              dataSource={studentResults}
-              columns={allResultsColumns}
-            />
+            <Table dataSource={studentResults} columns={allResultsColumns} />
           </div>
         );
       default:
