@@ -10,3 +10,4 @@ aiosqlite
 requests
 pytest
 pytest-cov
+coverage-badge

@@ -1,4 +1,6 @@
 # QuizGame
+![alt text](Pictures/coverage.svg)
+
 **Problem:** Professors find it inconvenient to create and conduct quizzes on moodle
 
 **Solution:** Make a user-friendly app for creating quizes

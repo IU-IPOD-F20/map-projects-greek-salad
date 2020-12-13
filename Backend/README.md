@@ -13,6 +13,11 @@ uvicorn main:app --reload
 python -m pytest --cov=main tests/
 ```
 
+## Create coverage bage
+```commandline
+coverage-badge -o ../Pictures/coverage.svg
+```
+
 ### API Documentation
 #### Swagger
 http://127.0.0.1:8000/docs
