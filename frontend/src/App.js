@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Menu, Typography, Button } from "antd";
 import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
+import createBadge from "./badge/badge";
 
 import Teacher from "./Teacher";
 import Student from "./Student";
@@ -23,6 +24,8 @@ const App = () => {
       history.push(`/${user}`);
     }
   };
+
+  createBadge();
 
   return (
     <div className="App">
