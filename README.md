@@ -56,8 +56,9 @@ npm run start
 ![alt text](Pictures/task_description.png)
 
 ## Burndown
-![alt text](Pictures/burndown1.jpg)
-![alt text](Pictures/burndown2.jpg)
+You can see burndown of each sprint on Agile Board of the corresponding sprint
+![alt text](Pictures/burndown_button.png)
+![alt text](Pictures/burndown.png)
 
 ## Sprint reviews
 
