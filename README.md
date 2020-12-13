@@ -1,5 +1,16 @@
 # QuizGame
-![alt text](Pictures/coverage.svg)
+
+## Coverage
+
+| Frontend        | Backend           |
+| ------------- |-------------|
+|  ![alt text](frontend/src/badge/img/coverage_total.svg)    | ![alt text](Pictures/coverage.svg) |
+
+## Frontend tests
+| Integration tests           | Snapshot tests  |
+|-------------| -----|
+ ![alt text](frontend/src/badge/img/integration.svg) | ![alt text](frontend/src/badge/img/snapshot.svg) |
+
 
 **Problem:** Professors find it inconvenient to create and conduct quizzes on moodle
 
