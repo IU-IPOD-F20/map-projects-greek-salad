@@ -214,7 +214,10 @@ const Quiz = () => {
                 Add new question
               </Button>
               <Upload
-                action={process.env.REACT_APP_BACKEND + `/csv/${quizId}`}
+                action={
+                  process.env.REACT_APP_BACKEND +
+                  `/csv/${quizId === -1 ? makeid(6) : quizId}`
+                }
                 headers={{
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
                 }}

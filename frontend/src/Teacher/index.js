@@ -2,6 +2,7 @@ import React from "react";
 import { Table, Button, Space } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useHistory, Link } from "react-router-dom";
+import saveAs from "file-saver";
 
 const Teacher = () => {
   const history = useHistory();
@@ -57,11 +58,13 @@ const Teacher = () => {
                     method: "GET",
                     headers: {
                       Authorization: `Bearer ${localStorage.getItem("token")}`,
+                      "Content-Type": "text/csv",
                     },
+                    responseType: "blob",
                   }
-                );
-                const body = await res;
-                console.log(body);
+                )
+                  .then((response) => response.blob())
+                  .then((blob) => saveAs(blob, "questions.csv"));
               }}
             >
               Download CSV
