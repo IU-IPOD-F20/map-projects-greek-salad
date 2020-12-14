@@ -43,6 +43,10 @@ cd frontend/
 npm i
 npm run start
 ```
+
+For adding snapshot test, make file with name [Name].test.js. For integration tests, add the new one to frontent/cypress/integration/[name of your test]. 
+
+For creating badges, we are using `make-badge`. Before commiting `husky` will recalculate all coverage and test results. 
 ### Backend
 [Backend readme](https://github.com/IU-IPOD-F20/map-projects-greek-salad/blob/main/Backend/README.md)
 
