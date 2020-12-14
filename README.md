@@ -33,6 +33,7 @@
 * Python + FastAPI
 
 ## Running the app
+### Frontend
 1. Firstly, please install Node.js and NPM [here](https://www.npmjs.com/get-npm) if it is not installed yet
 2. Then clone our repository
 3. Run the following:
@@ -42,6 +43,8 @@ cd frontend/
 npm i
 npm run start
 ```
+### Backend
+[Backend readme](https://github.com/IU-IPOD-F20/map-projects-greek-salad/blob/main/Backend/README.md)
 
 ## Youtrack
 * Go to Agile boards section
