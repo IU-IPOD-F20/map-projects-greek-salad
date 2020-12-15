@@ -66,10 +66,11 @@ const Login = () => {
     const body = await response.json();
     if (response.status === 200) {
       localStorage.setItem("token", body.access_token);
+      history.push("/teacher");
+      window.location.reload();
     } else {
       message.error("provide valid login and password");
     }
-    history.push("/teacher");
   };
 
   const onFinishSignup = async (values) => {
@@ -85,8 +86,14 @@ const Login = () => {
         }),
       }
     );
+    const data = await response.json();
+
+    if (response.status !== 201) {
+      message.error(data.detail);
+    } else {
+      onLogin(true);
+    }
     // history.push("/login");
-    onLogin(true);
   };
 
   return (

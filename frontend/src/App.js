@@ -15,7 +15,13 @@ const App = () => {
   const history = useHistory();
 
   const handleUserChange = (user) => {
-    history.push(`/${user}`);
+    if (user === "logout") {
+      localStorage.setItem("token", "");
+      history.push("/login");
+      window.location.reload();
+    } else {
+      history.push(`/${user}`);
+    }
   };
 
   return (
@@ -32,6 +38,9 @@ const App = () => {
           >
             <Menu.Item key="teacher">Teacher</Menu.Item>
             <Menu.Item key="student">Student</Menu.Item>
+            {!!localStorage.getItem("token") && (
+              <Menu.Item key="logout">Logout</Menu.Item>
+            )}
           </Menu>
         </Header>
         <Content

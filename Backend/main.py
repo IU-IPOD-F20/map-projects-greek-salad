@@ -1,11 +1,13 @@
-from fastapi import FastAPI, status, Depends, HTTPException
-from fastapi.responses import JSONResponse
-from fastapi_users.authentication import JWTAuthentication
+from fastapi import FastAPI, status, Depends, HTTPException, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi_users import FastAPIUsers
-from user_models import *
+from fastapi_users.authentication import JWTAuthentication
+
+import utils
 from database import Database
 from models import *
-from fastapi.middleware.cors import CORSMiddleware
+from user_models import *
 
 app = FastAPI(
     title="Quiz Game",
@@ -41,9 +43,15 @@ db = Database("quiz")  # TODO: Rewrite to https://fastapi.tiangolo.com/tutorial/
 
 
 @app.get("/",
-         description="Check if site working")
+         description="Check if site working", tags=['dev'])
 def test():
     return {"status": "Hello, slvt!"}
+
+
+@app.get("/hard_reset",
+         description="Drop full database", tags=['dev'])
+def hard_reset():
+    return db.hard_reset()
 
 
 @app.put("/user",
@@ -79,7 +87,28 @@ def get_quiz(quiz_id: str):
     is_ok, error, quiz = db.get_quiz_by_id(quiz_id)
     if is_ok:
         return quiz
-    return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"error": error})
+    return HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+
+@app.get("/csv/{quiz_id}",
+         description="Export quiz in csv")
+def get_quiz_csv(quiz_id: str):
+    is_ok, error, quiz = db.get_quiz_by_id(quiz_id)
+    filename = "csv.csv"
+    utils.quiz_to_csv(quiz, filename)
+    if is_ok:
+        return FileResponse(filename)
+    return HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+
+@app.put("/csv/{quiz_id}",
+         description="Import quiz in csv")
+def post_quiz_csv(quiz_id: str, file: UploadFile = File(...), user: User = Depends(fastapi_users.get_current_user)):
+    quiz = utils.csv_to_quiz(quiz_id, file.filename)
+    is_ok, error = db.add_quiz(quiz, user.email)
+    if is_ok:
+        return JSONResponse(status_code=status.HTTP_201_CREATED)
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
 
 @app.put("/quiz/{quiz_id}",
@@ -98,12 +127,6 @@ def get_quiz_results(quiz_id: str):
     if is_ok:
         return answers
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-
-
-@app.get("/hard_reset",
-         description="Drop full database")
-def hard_reset():
-    return db.hard_reset()
 
 
 ### REGISTRATION AND LOGIN

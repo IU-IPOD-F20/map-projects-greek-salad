@@ -2,6 +2,7 @@
 
 # dotenv
 .env
+*.csv
 
 # pickledb
 *.db
