@@ -1,5 +1,5 @@
 ## Install
-Make sure you have [Python3](https://www.python.org/downloads/) and (pip)[https://pip.pypa.io/en/stable/installing/] installed on your system
+Make sure you have [Python3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/) installed on your system
 
 ```commandline
 pip3 install -r requirements.txt 
