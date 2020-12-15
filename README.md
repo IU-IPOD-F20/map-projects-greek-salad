@@ -29,8 +29,10 @@
 
 ## Technology stack
 * [Github](https://github.com/)
-* React + Redux
-* Python + FastAPI
+* Frontend: React + Redux
+* Backend: Python + FastAPI
+* Database: pickleDB
+* Testing: pytest
 
 ## Running the app
 ### Frontend
