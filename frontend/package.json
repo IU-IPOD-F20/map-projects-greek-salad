@@ -4,15 +4,24 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
+    "@babel/preset-env": "^7.12.10",
     "@babel/preset-flow": "^7.12.1",
+    "@babel/preset-react": "^7.12.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.8.6",
+    "babel-jest": "^26.6.3",
     "cypress": "^6.0.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
+    "file-saver": "^2.0.5",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3",
+    "jest-coverage-badges": "^1.1.2",
+    "jest-html-reporter": "^3.3.0",
     "json-summary": "^1.3.0",
+    "lint-staged": "^10.5.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -23,15 +32,17 @@
   },
   "devDependencies": {
     "customize-cra": "^1.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "istanbul-badges-readme": "^1.2.0",
     "react-app-rewired": "^2.1.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test",
+    "test2": "jest",
     "eject": "react-scripts eject",
-    "cover": "npm test -- --coverage",
+    "cover": "npm run test -- --watchAll --outputFile=./src/badge/report.json",
     "make-badges": "istanbul-badges-readme",
     "make-badges-silent": "istanbul-badges-readme --silent",
     "make-badges-custom-dir": "istanbul-badges-readme --coverageDir='./my-custom-coverage'"
@@ -63,11 +74,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "lint-staged"
-    }
   }
 }
