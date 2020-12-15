@@ -58,7 +58,7 @@ For adding snapshot test, make file with name [Name].test.js. For integration te
 For creating badges, we are using `make-badge`. Before commiting `husky` will recalculate all coverage and test results. 
 
 ### Backend
-[Backend readme](https://github.com/IU-IPOD-F20/map-projects-greek-salad/blob/main/Backend/README.md)
+[Backend README](https://github.com/IU-IPOD-F20/map-projects-greek-salad/blob/main/Backend/README.md)
 
 ## Youtrack
 * Go to Agile boards section
