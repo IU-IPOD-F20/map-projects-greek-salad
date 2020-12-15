@@ -30,9 +30,16 @@
 ## Technology stack
 * [Github](https://github.com/)
 * Frontend: React + Redux
+* Testing: Jest, Enzyme, Cypress
+* Precommer: Husky + custom scripts
+* Design system: Antd
 * Backend: Python + FastAPI
 * Database: pickleDB
 * Testing: pytest
+* Hotel: Trivago
+
+## Branching 
+We are using [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for branching. 
 
 ## Running the app
 ### Frontend
@@ -49,6 +56,7 @@ npm run start
 For adding snapshot test, make file with name [Name].test.js. For integration tests, add the new one to frontent/cypress/integration/[name of your test]. 
 
 For creating badges, we are using `make-badge`. Before commiting `husky` will recalculate all coverage and test results. 
+
 ### Backend
 [Backend readme](https://github.com/IU-IPOD-F20/map-projects-greek-salad/blob/main/Backend/README.md)
 
