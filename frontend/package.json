@@ -107,7 +107,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run report"
+      "pre-commit": "npm run report && npm run badge && git add -A ."
     }
   },
   "jest": {
