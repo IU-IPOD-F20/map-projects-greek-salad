@@ -29,10 +29,20 @@
 
 ## Technology stack
 * [Github](https://github.com/)
-* React + Redux
-* Python + FastAPI
+* Frontend: React + Redux
+* Testing: Jest, Enzyme, Cypress
+* Precommer: Husky + custom scripts
+* Design system: Antd
+* Backend: Python + FastAPI
+* Database: pickleDB
+* Testing: pytest
+* Hotel: Trivago
+
+## Branching 
+We are using [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for branching. 
 
 ## Running the app
+### Frontend
 1. Firstly, please install Node.js and NPM [here](https://www.npmjs.com/get-npm) if it is not installed yet
 2. Then clone our repository
 3. Run the following:
@@ -42,6 +52,13 @@ cd frontend/
 npm i
 npm run start
 ```
+
+For adding snapshot test, make file with name [Name].test.js. For integration tests, add the new one to frontent/cypress/integration/[name of your test]. 
+
+For creating badges, we are using `make-badge`. Before commiting `husky` will recalculate all coverage and test results. 
+
+### Backend
+[Backend README](https://github.com/IU-IPOD-F20/map-projects-greek-salad/blob/main/Backend/README.md)
 
 ## Youtrack
 * Go to Agile boards section
@@ -59,6 +76,11 @@ npm run start
 You can see burndown of each sprint on Agile Board of the corresponding sprint
 ![alt text](Pictures/burndown_button.png)
 ![alt text](Pictures/burndown.png)
+
+## User Documentation
+
+## Project UI
+![alt text](Pictures/UI.jpeg)
 
 ## Sprint reviews
 
