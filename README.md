@@ -77,6 +77,11 @@ You can see burndown of each sprint on Agile Board of the corresponding sprint
 ![alt text](Pictures/burndown_button.png)
 ![alt text](Pictures/burndown.png)
 
+## User Documentation
+
+## Project UI
+![alt text](Pictures/UI.jpeg)
+
 ## Sprint reviews
 
 ![Sprint Evaluations](https://docs.google.com/spreadsheets/d/e/2PACX-1vTXIhfQzTkLutk3Wp2zWwAcCXQe7GZCZGWMZHp4nMPAgInjsxWohwH5hxwd4N9iyATx-H-QBAiTGWlj/pubchart?oid=553245236&format=image)
