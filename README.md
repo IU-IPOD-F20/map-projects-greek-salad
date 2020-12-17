@@ -78,7 +78,43 @@ You can see burndown of each sprint on Agile Board of the corresponding sprint
 ![alt text](Pictures/burndown.png)
 
 ## User Documentation
+### Sign In / Sign Up
+For Signing In or Signing Up you should:
+1. Choose your role
 
+ ![alt text](Role.png)
+ 
+2.Fill all fields
+
+![alt text](Pictures/Signup.jpg)
+![alt text](Pictures/Login.jpg)
+ 
+3. Click Register or Submit button
+
+### Teacher
+1. You can start, modify, delete, download CSV of existing quizzes and add a new quiz
+
+![alt text](Pictures/Quiz.jpg)
+
+2. We have functionality of Uploading CSV, add new questions, update or delete existing questions, see Quiz results
+
+![alt text](Pictures/NewQuiz.jpg)
+![alt text](Pictures/Results.jpg)
+ 
+3. Every Quiz has its own code
+
+![alt text](Pictures/Code.jpg)
+
+
+### Student
+1. Students have opportunities to answer the questions
+ 
+![alt text](Pictures/Question.jpg)
+
+2. See their results
+ 
+![alt text](Pictures/YourResults.jpg)
+ 
 ## Project UI
 ![alt text](Pictures/UI.jpeg)
 
