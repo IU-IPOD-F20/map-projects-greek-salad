@@ -82,7 +82,7 @@ You can see burndown of each sprint on Agile Board of the corresponding sprint
 For Signing In or Signing Up you should:
 1. Choose your role
 
-![alt text](Role.png)
+![alt text](Pictures/Role.png)
  
 2.Fill all fields
 
