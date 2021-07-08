@@ -1,0 +1,23 @@
+.enterCode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.startWait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.questionWait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
